@@ -227,7 +227,7 @@ function getItemTitle(item, category) {
     case 'skills':
       return item;
     case 'projects':
-      return item.name;
+      return item.title;
     case 'books':
       return item.title;
     case 'designs':
@@ -627,7 +627,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
   
   // Update favicon based on theme
-  updateFavicon();
+  //updateFavicon();
 });
 
 // Update favicon based on theme
@@ -665,7 +665,7 @@ themeToggle.onclick = function() {
   htmlElement.setAttribute('data-theme', newTheme);
   localStorage.setItem('theme', newTheme);
   updateThemeIcon(newTheme);
-  updateFavicon();
+  //updateFavicon();
 };
 
 // Add intersection observer for scroll animations
