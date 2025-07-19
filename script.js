@@ -146,7 +146,7 @@ function searchAllData(query) {
   
   // Search projects
   results.projects = allData.projects?.filter(project =>
-    project.name?.toLowerCase().includes(query) ||
+    project.title?.toLowerCase().includes(query) ||
     project.description?.toLowerCase().includes(query) ||
     project.technologies?.some(tech => tech.toLowerCase().includes(query)) ||
     project.category?.toLowerCase().includes(query)
