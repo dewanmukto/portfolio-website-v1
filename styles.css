@@ -1,0 +1,104 @@
+/* Root variables and theming */
+:root {
+  --color-bg: #ffffff;
+  --color-fg: #000000;
+  --color-accent: #444444;
+  --transition-speed: 0.3s;
+}
+[data-theme="light"] {
+  --color-bg: #ffffff;
+  --color-fg: #000000;
+}
+[data-theme="dark"] {
+  --color-bg: #111111;
+  --color-fg: #eeeeee;
+}
+
+/* Global styles */
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+  line-height: 1.6;
+  transition: background-color var(--transition-speed), color var(--transition-speed);
+}
+h1, h2 {
+  font-family: 'Lora', serif;
+  margin-bottom: 0.5em;
+}
+section {
+  padding: 2em;
+  max-width: 1000px;
+  margin: auto;
+}
+/* Navigation styling */
+.nav-bar {
+  background: var(--color-bg);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  border-bottom: 1px solid #ccc;
+}
+.nav-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0.5em;
+  margin: 0;
+  justify-content: center;
+}
+.nav-list li {
+  margin: 0 0.5em;
+}
+.nav-list a {
+  text-decoration: none;
+  color: var(--color-fg);
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  transition: transform var(--transition-speed);
+}
+.nav-list a:hover {
+  transform: scale(1.1);
+}
+/* Theme toggle button */
+.theme-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2em;
+  cursor: pointer;
+  margin-left: auto;
+}
+/* Section layouts */
+#projects-list, #designs-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.5em;
+}
+#projects-list .card, #designs-list .card {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  padding: 1em;
+  border-radius: 8px;
+  flex: 1 1 calc(45% - 1em);
+  min-width: 200px;
+  transition: transform var(--transition-speed);
+}
+#projects-list .card:hover {
+  transform: translateY(-5px);
+}
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .nav-list {
+    flex-direction: column;
+    align-items: center;
+  }
+  #projects-list .card, #designs-list .card {
+    flex: 1 1 100%;
+  }
+  section {
+    padding: 1em;
+  }
+}
