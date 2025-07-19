@@ -30,7 +30,9 @@
     <link rel="preconnect" href="https://i.ytimg.com">
     
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Futura+PT:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Lora:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/futura-std-4" rel="stylesheet">
+    <!-- <link href="https://fonts.googleapis.com/css2?family=Futura+PT:wght@400;500;600;700&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"> -->
     
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -63,9 +65,107 @@
       "knowsLanguage": ["English", "Bengali"]
     }
     </script>
-  </head>
-  <body>
+
+  <!-- Iconify (Solar icons) -->
+  <script src="https://code.iconify.design/3/3.1.1/iconify.min.js"></script>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Navigation Tabs -->
+  <nav class="nav-bar">
+    <ul class="nav-list">
+      <li><a href="#achievements">
+        <span class="iconify-inline" data-icon="solar:trophy-bold-duotone"></span>
+        Achievements
+      </a></li>
+      <li><a href="#education">
+        <span class="iconify-inline" data-icon="solar:book-bold-duotone"></span>
+        Education
+      </a></li>
+      <li><a href="#projects">
+        <span class="iconify-inline" data-icon="solar:rocket-launch-bold-duotone"></span>
+        Projects
+      </a></li>
+      <li><a href="#skills">
+        <span class="iconify-inline" data-icon="solar:star-bold-duotone"></span>
+        Skills
+      </a></li>
+      <li><a href="#books">
+        <span class="iconify-inline" data-icon="solar:library-bold-duotone"></span>
+        Books
+      </a></li>
+      <li><a href="#designs">
+        <span class="iconify-inline" data-icon="solar:palette-bold-duotone"></span>
+        Designs
+      </a></li>
+      <li><a href="#videos">
+        <span class="iconify-inline" data-icon="solar:film-bold-duotone"></span>
+        Videos
+      </a></li>
+      <li><a href="#social">
+        <span class="iconify-inline" data-icon="solar:share-bold-duotone"></span>
+        Social
+      </a></li>
+    </ul>
+    <!-- Theme Toggle Button -->
+    <button type="button" class="theme-toggle" data-theme-toggle aria-label="Toggle dark mode">
+      🌙
+    </button>
+  </nav>
+
+  <!-- Sections -->
+  <section id="about">
+    <h1>Dewan Mukto</h1>
+    <p>Hobbyist author &amp; poet. Aspiring technocrat, full-time technologist, and part-time scientist.</p>
+  </section>
+
+  <section id="achievements">
+    <h2>Achievements</h2>
+    <ul id="achievements-list"><!-- JS inserts items here --></ul>
+  </section>
+
+  <section id="education">
+    <h2>Education</h2>
+    <div id="education-list"><!-- JS inserts education cards here --></div>
+  </section>
+
+  <section id="projects">
+    <h2>Projects</h2>
+    <div id="projects-list"><!-- JS inserts project cards here --></div>
+  </section>
+
+  <section id="skills">
+    <h2>Skills</h2>
+    <ul id="skills-list"><!-- JS inserts skills badges or list --></ul>
+  </section>
+
+  <section id="books">
+    <h2>Books</h2>
+    <div id="books-list"><!-- JS inserts book items here --></div>
+  </section>
+
+  <section id="designs">
+    <h2>Designs</h2>
+    <div id="designs-list"><!-- JS inserts design thumbnails here --></div>
+  </section>
+
+  <section id="videos">
+    <h2>Videos</h2>
+    <div id="videos-list"><!-- JS inserts embedded video iframes --></div>
+  </section>
+
+  <section id="social">
+    <h2>Connect with Me</h2>
+    <ul id="social-list"><!-- JS inserts social media links with icons --></ul>
+  </section>
+
+  <!-- JavaScript (including Motion for animations) -->
+  <script type="module" src="script.js"></script>
+</body>
+  <!-- <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
-  </body>
+  </body> -->
 </html>
