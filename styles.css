@@ -1007,6 +1007,16 @@ p {
   border-radius: var(--border-radius);
 }
 
+/* Add loading animation */
+function addLoadingAnimation() {
+  const style = document.createElement('style');
+  style.textContent = `
+    .achievement-card,
+    .timeline-item,
+    .skill-tag,
+    .project-card,
+    .book-card,
+
 /* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
