@@ -396,7 +396,7 @@ function loadProjects() {
       ${links.length > 0 ? `<div class="project-links">${links.join('')}</div>` : ''}
       <div class="project-meta">
         <span>${project.category}</span>
-        <span class="project-status ${project.status.toLowerCase().replace(' ', '-')}">${project.status}</span>
+        <span class="project-status">${project.type}</span>
       </div>
     `;
     
