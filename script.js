@@ -57,11 +57,12 @@ let allData = {};
 // Load all data
 async function loadAllData() {
   try {
-    const [achievements, education, employment, skills, books, designs, videos, socials] = await Promise.all([
+    const [achievements, education, employment, skills, projects, books, designs, videos, socials] = await Promise.all([
       fetch('data/achievements.json').then(r => r.json()),
       fetch('data/education.json').then(r => r.json()),
       fetch('data/employments.json').then(r => r.json()),
       fetch('data/skills.json').then(r => r.json()),
+      fetch('data/projects.json').then(r => r.json()),
       fetch('data/books.json').then(r => r.json()),
       fetch('data/designs.json').then(r => r.json()),
       fetch('data/videos.json').then(r => r.json()),
@@ -73,6 +74,7 @@ async function loadAllData() {
       education,
       employment,
       skills,
+      projects,
       books,
       designs,
       videos,
@@ -84,6 +86,7 @@ async function loadAllData() {
     loadEducation();
     loadEmployment();
     loadSkills();
+    loadProjects();
     loadBooks();
     loadDesigns();
     loadVideos();
@@ -139,6 +142,14 @@ function searchAllData(query) {
   // Search skills
   results.skills = allData.skills?.filter(skill =>
     skill.toLowerCase().includes(query)
+  ) || [];
+  
+  // Search projects
+  results.projects = allData.projects?.filter(project =>
+    project.name?.toLowerCase().includes(query) ||
+    project.description?.toLowerCase().includes(query) ||
+    project.technologies?.some(tech => tech.toLowerCase().includes(query)) ||
+    project.category?.toLowerCase().includes(query)
   ) || [];
   
   // Search books
@@ -215,6 +226,8 @@ function getItemTitle(item, category) {
       return `${Array.isArray(item.role) ? item.role[0] : item.role} at ${item.company}`;
     case 'skills':
       return item;
+    case 'projects':
+      return item.name;
     case 'books':
       return item.title;
     case 'designs':
@@ -341,6 +354,53 @@ function loadSkills() {
     tag.style.animationDelay = `${index * 0.05}s`;
     
     container.appendChild(tag);
+  });
+}
+
+function loadProjects() {
+  const container = document.getElementById('projects-list');
+  container.innerHTML = '';
+  
+  allData.projects?.forEach((project, index) => {
+    const card = document.createElement('div');
+    card.className = 'project-card';
+    card.style.animationDelay = `${index * 0.1}s`;
+    
+    const techTags = project.technologies?.map(tech => 
+      `<span class="tech-tag">${tech}</span>`
+    ).join('') || '';
+    
+    const links = [];
+    if (project.github) {
+      links.push(`<a href="${project.github}" target="_blank" rel="noopener noreferrer" class="project-link">
+        <span class="iconify" data-icon="solar:code-bold-duotone"></span>
+        <span>GitHub</span>
+      </a>`);
+    }
+    if (project.demo) {
+      links.push(`<a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="project-link secondary">
+        <span class="iconify" data-icon="solar:eye-bold-duotone"></span>
+        <span>Live Demo</span>
+      </a>`);
+    }
+    
+    card.innerHTML = `
+      <div class="project-header">
+        <div class="project-title">
+          <span class="iconify" data-icon="solar:widget-bold-duotone"></span>
+          ${project.name}
+        </div>
+        <div class="project-description">${project.description}</div>
+        <div class="project-tech">${techTags}</div>
+      </div>
+      ${links.length > 0 ? `<div class="project-links">${links.join('')}</div>` : ''}
+      <div class="project-meta">
+        <span>${project.category}</span>
+        <span class="project-status ${project.status.toLowerCase().replace(' ', '-')}">${project.status}</span>
+      </div>
+    `;
+    
+    container.appendChild(card);
   });
 }
 
@@ -557,7 +617,54 @@ function addLoadingAnimation() {
 document.addEventListener('DOMContentLoaded', () => {
   addLoadingAnimation();
   loadAllData();
+  
+  // Update brand logo
+  const brandIcon = document.querySelector('.brand-icon');
+  if (brandIcon) {
+    brandIcon.innerHTML = '<img src="data/logo.png" alt="Dewan Mukto Logo" class="brand-logo" />';
+  }
+  
+  // Update favicon based on theme
+  updateFavicon();
 });
+
+// Update favicon based on theme
+function updateFavicon() {
+  const favicon = document.getElementById('favicon');
+  const theme = htmlElement.getAttribute('data-theme');
+  
+  // Create a canvas to invert the logo for light theme
+  const canvas = document.createElement('canvas');
+  const ctx = canvas.getContext('2d');
+  const img = new Image();
+  
+  img.onload = function() {
+    canvas.width = img.width;
+    canvas.height = img.height;
+    
+    if (theme === 'light') {
+      // Invert colors for light theme
+      ctx.filter = 'invert(1)';
+    }
+    
+    ctx.drawImage(img, 0, 0);
+    favicon.href = canvas.toDataURL();
+  };
+  
+  img.src = 'data/logo.png';
+}
+
+// Update favicon when theme changes
+const originalToggleTheme = themeToggle.onclick;
+themeToggle.onclick = function() {
+  const currentTheme = htmlElement.getAttribute('data-theme');
+  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+  
+  htmlElement.setAttribute('data-theme', newTheme);
+  localStorage.setItem('theme', newTheme);
+  updateThemeIcon(newTheme);
+  updateFavicon();
+};
 
 // Add intersection observer for scroll animations
 const observerOptions = {
@@ -575,7 +682,7 @@ const observer = new IntersectionObserver((entries) => {
 
 // Observe elements when they're added to the DOM
 const observeElements = () => {
-  document.querySelectorAll('.achievement-card, .timeline-item, .skill-tag, .book-card, .design-card, .video-card, .social-card').forEach(el => {
+  document.querySelectorAll('.achievement-card, .timeline-item, .skill-tag, .project-card, .book-card, .design-card, .video-card, .social-card').forEach(el => {
     observer.observe(el);
   });
 };
