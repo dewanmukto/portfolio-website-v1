@@ -619,54 +619,7 @@ function addLoadingAnimation() {
 document.addEventListener('DOMContentLoaded', () => {
   addLoadingAnimation();
   loadAllData();
-  
-  // Update brand logo
-  const brandIcon = document.querySelector('.brand-icon');
-  if (brandIcon) {
-    brandIcon.innerHTML = '<img src="data/logo.png" alt="Dewan Mukto Logo" class="brand-logo" />';
-  }
-  
-  // Update favicon based on theme
-  //updateFavicon();
 });
-
-// Update favicon based on theme
-function updateFavicon() {
-  const favicon = document.getElementById('favicon');
-  const theme = htmlElement.getAttribute('data-theme');
-  
-  // Create a canvas to invert the logo for light theme
-  const canvas = document.createElement('canvas');
-  const ctx = canvas.getContext('2d');
-  const img = new Image();
-  
-  img.onload = function() {
-    canvas.width = img.width;
-    canvas.height = img.height;
-    
-    if (theme === 'light') {
-      // Invert colors for light theme
-      ctx.filter = 'invert(1)';
-    }
-    
-    ctx.drawImage(img, 0, 0);
-    favicon.href = canvas.toDataURL();
-  };
-  
-  img.src = 'data/logo.png';
-}
-
-// Update favicon when theme changes
-const originalToggleTheme = themeToggle.onclick;
-themeToggle.onclick = function() {
-  const currentTheme = htmlElement.getAttribute('data-theme');
-  const newTheme = currentTheme === 'light' ? 'dark' : 'light';
-  
-  htmlElement.setAttribute('data-theme', newTheme);
-  localStorage.setItem('theme', newTheme);
-  updateThemeIcon(newTheme);
-  //updateFavicon();
-};
 
 // Add intersection observer for scroll animations
 const observerOptions = {
