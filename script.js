@@ -619,6 +619,10 @@ function addLoadingAnimation() {
 document.addEventListener('DOMContentLoaded', () => {
   addLoadingAnimation();
   loadAllData();
+  const brandIcon = document.querySelector('.brand-icon');
+  if (brandIcon) {
+    brandIcon.innerHTML = '<img src="data/logo.png" alt="Dewan Mukto Logo" class="brand-logo" />';
+  }
 });
 
 // Add intersection observer for scroll animations
