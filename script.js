@@ -371,34 +371,36 @@ function loadProjects() {
     ).join('') || '';
     
     const links = [];
-    if (project.github) {
-      links.push(`<a href="${project.github}" target="_blank" rel="noopener noreferrer" class="project-link">
+    if (project.repo) {
+      links.push(`<a href="${project.repo}" target="_blank" rel="noopener noreferrer" class="project-link">
         <span class="iconify" data-icon="solar:code-bold-duotone"></span>
         <span>GitHub</span>
       </a>`);
     }
-    if (project.demo) {
-      links.push(`<a href="${project.demo}" target="_blank" rel="noopener noreferrer" class="project-link secondary">
+    if (project.url) {
+      links.push(`<a href="${project.url}" target="_blank" rel="noopener noreferrer" class="project-link secondary">
         <span class="iconify" data-icon="solar:eye-bold-duotone"></span>
         <span>Live Demo</span>
       </a>`);
     }
     
     card.innerHTML = `
-      <div class="project-header">
-        <div class="project-title">
-          <span class="iconify" data-icon="solar:widget-bold-duotone"></span>
-          ${project.name}
-        </div>
-        <div class="project-description">${project.description}</div>
-        <div class="project-tech">${techTags}</div>
-      </div>
-      ${links.length > 0 ? `<div class="project-links">${links.join('')}</div>` : ''}
-      <div class="project-meta">
-        <span>${project.category}</span>
-        <span class="project-status">${project.type}</span>
-      </div>
-    `;
+  <div class="project-header">
+    <div class="project-title">
+      ${project.icon 
+        ? `<img src="${project.icon}" alt="${project.title} icon" class="project-icon" />` 
+        : `<span class="iconify" data-icon="solar:widget-bold-duotone"></span>`}
+      ${project.title}
+    </div>
+    <div class="project-description">${project.description}</div>
+    <div class="project-tech">${techTags}</div>
+  </div>
+  ${links.length > 0 ? `<div class="project-links">${links.join('')}</div>` : ''}
+  <div class="project-meta">
+    <span>${project.category}</span>
+    <span class="project-status">${project.type}</span>
+  </div>
+`;
     
     container.appendChild(card);
   });
