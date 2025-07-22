@@ -193,4 +193,8 @@ permalink: /contact/
     grid-template-columns: 1fr;
   }
 }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> origin/main

@@ -191,4 +191,8 @@ permalink: /about/
     justify-content: center;
   }
 }
+<<<<<<< HEAD
 </style>
+=======
+</style>
+>>>>>>> origin/main
