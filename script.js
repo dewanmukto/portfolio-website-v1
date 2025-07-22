@@ -754,7 +754,7 @@ function loadSocials() {
     'Goodreads': 'fab fa-goodreads'
   };
   
-  Object.entries(allData.socials || {}).forEach(([platform, url], index) => {
+  Object.entries(allData.socials || {}).forEach(([platform, url, username], index) => {
     const card = document.createElement('a');
     card.className = 'social-card';
     card.href = url;
@@ -769,7 +769,7 @@ function loadSocials() {
         <i class="${iconClass}"></i>
       </div>
       <div class="social-name">${platform}</div>
-      <div class="social-handle">@dewanmukto</div>
+      <div class="social-handle">@${username}</div>
     `;
     
     container.appendChild(card);
