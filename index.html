@@ -139,9 +139,17 @@
             <span class="iconify" data-icon="solar:library-bold-duotone"></span>
             <span>Books</span>
           </button></li>
+          <li><button class="tab-btn" data-tab="articles">
+            <span class="iconify" data-icon="solar:document-text-bold-duotone"></span>
+            <span>Articles</span>
+          </button></li>
           <li><button class="tab-btn" data-tab="designs">
             <span class="iconify" data-icon="solar:palette-bold-duotone"></span>
             <span>Designs</span>
+          </button></li>
+          <li><button class="tab-btn" data-tab="memories">
+            <span class="iconify" data-icon="solar:camera-bold-duotone"></span>
+            <span>Memories</span>
           </button></li>
           <li><button class="tab-btn" data-tab="videos">
             <span class="iconify" data-icon="solar:videocamera-bold-duotone"></span>
@@ -251,6 +259,35 @@
           <div id="books-list" class="books-grid"></div>
         </section>
 
+        <!-- Articles Tab -->
+        <section id="articles" class="tab-content">
+          <div class="section-header">
+            <h2>Articles & Blog Posts</h2>
+            <p>Thoughts on writing, technology, and creative expression</p>
+          </div>
+          
+          <!-- Filter Controls -->
+          <div class="articles-filters">
+            <div class="filter-group">
+              <label for="yearFilter">Year:</label>
+              <select id="yearFilter">
+                <option value="">All Years</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label for="tagFilter">Tag:</label>
+              <select id="tagFilter">
+                <option value="">All Tags</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <button id="clearFilters" class="clear-filters-btn">Clear Filters</button>
+            </div>
+          </div>
+          
+          <div id="articles-list" class="articles-grid"></div>
+        </section>
+
         <!-- Designs Tab -->
         <section id="designs" class="tab-content">
           <div class="section-header">
@@ -258,6 +295,15 @@
             <p>UI/UX projects and graphic designs</p>
           </div>
           <div id="designs-list" class="designs-grid"></div>
+        </section>
+
+        <!-- Memories Tab -->
+        <section id="memories" class="tab-content">
+          <div class="section-header">
+            <h2>Memories</h2>
+            <p>A visual journey through moments and experiences</p>
+          </div>
+          <div id="memories-list" class="memories-masonry"></div>
         </section>
 
         <!-- Videos Tab -->

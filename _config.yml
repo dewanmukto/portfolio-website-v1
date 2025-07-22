@@ -1,0 +1,63 @@
+# Site settings
+title: "Dewan Mukto - Author, Developer & Creative Professional"
+description: "Portfolio of Dewan Mukto - Acclaimed author, software developer, and creative professional. Explore books, designs, videos, and professional journey."
+baseurl: "" # the subpath of your site, e.g. /blog
+url: "https://mukto.mux8.com" # the base hostname & protocol for your site
+
+# Author settings
+author:
+  name: "Dewan Mukto"
+  email: "hello@dewanmukto.com"
+  bio: "Hobbyist author & poet. Aspiring technocrat, full-time technologist, and part-time scientist."
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+plugins:
+  - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-seo-tag
+
+# Kramdown settings
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+  syntax_highlighter_opts:
+    line_numbers: true
+    css_class: 'highlight'
+
+# Collections
+collections:
+  posts:
+    output: true
+    permalink: /post/:slug/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Dewan Mukto"
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+  - README.md
+  - package.json
+  - package-lock.json
+  - src/
+  - tailwind.config.js
+  - vite.config.ts
+  - tsconfig.json
+
+# Include
+include:
+  - _pages

@@ -1,0 +1,82 @@
+---
+layout: default
+---
+
+<!-- Header with Navigation -->
+<header class="header">
+  <div class="container">
+    <div class="header-content">
+      <!-- Logo/Brand -->
+      <div class="brand">
+        <div class="brand-icon">
+          <img src="{{ '/data/logo.png' | relative_url }}" alt="Dewan Mukto Logo" class="brand-logo" />
+        </div>
+        <div class="brand-text">
+          <h1 class="brand-name"><a href="{{ '/' | relative_url }}" style="text-decoration: none; color: inherit;">Dewan Mukto</a></h1>
+          <p class="brand-tagline">Author & Developer</p>
+        </div>
+      </div>
+
+      <!-- Back to Home -->
+      <div class="post-nav">
+        <a href="{{ '/' | relative_url }}" class="back-link">
+          <span class="iconify" data-icon="solar:arrow-left-bold-duotone"></span>
+          <span>Back to Portfolio</span>
+        </a>
+      </div>
+
+      <!-- Theme Toggle -->
+      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+        <span class="iconify" data-icon="solar:moon-bold-duotone"></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Post Content -->
+<main class="post-main">
+  <div class="container">
+    <article class="post-article">
+      <header class="post-header">
+        <div class="post-meta">
+          <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+          {% if page.tags and page.tags.size > 0 %}
+            <div class="post-tags">
+              {% for tag in page.tags %}
+                <span class="tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+        <h1 class="post-title">{{ page.title }}</h1>
+        {% if page.description %}
+          <p class="post-description">{{ page.description }}</p>
+        {% endif %}
+      </header>
+
+      <div class="post-content line-numbers">
+        {{ content }}
+      </div>
+
+      <footer class="post-footer">
+        <div class="post-author">
+          <div class="author-info">
+            <h4>{{ page.author | default: site.author.name }}</h4>
+            <p>{{ site.author.bio }}</p>
+          </div>
+        </div>
+        
+        {% if page.tags and page.tags.size > 0 %}
+          <div class="post-tags-footer">
+            <h4>Tags</h4>
+            <div class="tags-list">
+              {% for tag in page.tags %}
+                <span class="tag">{{ tag }}</span>
+              {% endfor %}
+            </div>
+          </div>
+        {% endif %}
+      </footer>
+    </article>
+  </div>
+</main>
