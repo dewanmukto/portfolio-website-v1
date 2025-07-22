@@ -57,7 +57,7 @@ let allData = {};
 // Load all data
 async function loadAllData() {
   try {
-    const [achievements, education, employment, skills, projects, books, designs, videos, socials, memories] = await Promise.all([
+    const [achievements, education, employment, skillsData, projects, books, designs, videos, socials, memories] = await Promise.all([
       fetch('data/achievements.json').then(r => r.json()),
       fetch('data/education.json').then(r => r.json()),
       fetch('data/employments.json').then(r => r.json()),
@@ -74,7 +74,7 @@ async function loadAllData() {
       achievements,
       education,
       employment,
-      skills,
+      skills: skillsData,
       projects,
       books,
       designs,
@@ -144,9 +144,16 @@ function searchAllData(query) {
   ) || [];
   
   // Search skills
-  results.skills = allData.skills?.filter(skill =>
-    skill.toLowerCase().includes(query)
-  ) || [];
+  results.skills = [];
+  if (allData.skills) {
+    Object.values(allData.skills).forEach(skillArray => {
+      if (Array.isArray(skillArray)) {
+        results.skills.push(...skillArray.filter(skill =>
+          skill.toLowerCase().includes(query)
+        ));
+      }
+    });
+  }
   
   // Search projects
   results.projects = allData.projects?.filter(project =>
@@ -364,13 +371,44 @@ function loadSkills() {
   const container = document.getElementById('skills-list');
   container.innerHTML = '';
   
-  allData.skills?.forEach((skill, index) => {
-    const tag = document.createElement('div');
-    tag.className = 'skill-tag';
-    tag.textContent = skill;
-    tag.style.animationDelay = `${index * 0.05}s`;
+  if (!allData.skills) return;
+  
+  const skillCategories = [
+    { key: 'programming_skills', title: 'Programming', icon: 'solar:code-bold-duotone' },
+    { key: 'technical_skills', title: 'Technical', icon: 'solar:settings-bold-duotone' },
+    { key: 'business_skills', title: 'Business', icon: 'solar:case-bold-duotone' },
+    { key: 'passive_skills', title: 'Soft Skills', icon: 'solar:user-heart-bold-duotone' }
+  ];
+  
+  skillCategories.forEach((category, categoryIndex) => {
+    const skills = allData.skills[category.key];
+    if (!skills || !Array.isArray(skills)) return;
     
-    container.appendChild(tag);
+    const categorySection = document.createElement('div');
+    categorySection.className = 'skills-category';
+    categorySection.style.animationDelay = `${categoryIndex * 0.1}s`;
+    
+    categorySection.innerHTML = `
+      <div class="skills-category-header">
+        <span class="iconify" data-icon="${category.icon}"></span>
+        <h3>${category.title}</h3>
+        <span class="skills-count">${skills.length}</span>
+      </div>
+      <div class="skills-category-grid"></div>
+    `;
+    
+    const grid = categorySection.querySelector('.skills-category-grid');
+    
+    skills.forEach((skill, index) => {
+      const tag = document.createElement('div');
+      tag.className = 'skill-tag';
+      tag.textContent = skill;
+      tag.style.animationDelay = `${(categoryIndex * 0.1) + (index * 0.02)}s`;
+      
+      grid.appendChild(tag);
+    });
+    
+    container.appendChild(categorySection);
   });
 }
 
@@ -836,12 +874,80 @@ function addLoadingAnimation() {
 document.addEventListener('DOMContentLoaded', () => {
   addLoadingAnimation();
   loadAllData();
+  
+  // Handle hash navigation on page load
+  handleHashNavigation();
+  
   const brandIcon = document.querySelector('.brand-icon');
   if (brandIcon) {
     brandIcon.innerHTML = '<img src="data/logo.png" alt="Dewan Mukto Logo" class="brand-logo" />';
   }
 });
 
+// Hash navigation functionality
+function handleHashNavigation() {
+  const hash = window.location.hash.substring(1); // Remove the '#'
+  if (hash) {
+    const tabBtn = document.querySelector(`[data-tab="${hash}"]`);
+    if (tabBtn) {
+      // Wait a bit for content to load
+      setTimeout(() => {
+        tabBtn.click();
+        scrollTabIntoView(tabBtn);
+      }, 500);
+    }
+  }
+}
+
+// Update hash when tab changes
+const originalTabButtons = document.querySelectorAll('.tab-btn');
+originalTabButtons.forEach(button => {
+  const originalClickHandler = button.onclick;
+  button.addEventListener('click', () => {
+    const targetTab = button.getAttribute('data-tab');
+    
+    // Update URL hash without triggering scroll
+    history.replaceState(null, null, `#${targetTab}`);
+    
+    // Remove active class from all tabs and contents
+    tabButtons.forEach(btn => btn.classList.remove('active'));
+    tabContents.forEach(content => content.classList.remove('active'));
+    
+    // Add active class to clicked tab and corresponding content
+    button.classList.add('active');
+    document.getElementById(targetTab).classList.add('active');
+    
+    // Animate tab transition
+    const activeContent = document.getElementById(targetTab);
+    activeContent.style.opacity = '0';
+    activeContent.style.transform = 'translateY(20px)';
+    
+    setTimeout(() => {
+      activeContent.style.opacity = '1';
+      activeContent.style.transform = 'translateY(0)';
+    }, 50);
+    
+    // Scroll tab into view
+    scrollTabIntoView(button);
+  });
+});
+
+// Handle browser back/forward
+window.addEventListener('hashchange', handleHashNavigation);
+
+function scrollTabIntoView(tabButton) {
+  const tabList = document.querySelector('.tab-list');
+  const tabRect = tabButton.getBoundingClientRect();
+  const listRect = tabList.getBoundingClientRect();
+  
+  if (tabRect.left < listRect.left || tabRect.right > listRect.right) {
+    tabButton.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'center'
+    });
+  }
+}
 // Add intersection observer for scroll animations
 const observerOptions = {
   threshold: 0.1,
